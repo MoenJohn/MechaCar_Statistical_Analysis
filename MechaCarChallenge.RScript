@@ -1,3 +1,30 @@
+# Deliverable 1
+
 # Import libraries
 library("dplyr")
+
+mechacar <- read.csv(file="MechaCar_mpg.csv",check.names=F,stringsAsFactors=F,)
+
+mechacar_lm <- lm(mpg ~ vehicle_length+vehicle_weight+spoiler_angle+ground_clearance+AWD
+,data=mechacar) #create linear model
+summary(mechacar_lm) #summarize linear model
+
+# Deliverable 2
+suspension <- read.csv(file="Suspension_Coil.csv",check.names=F,stringsAsFactors=F,)
+
+# summarize_demo <- demo_table2 %>% group_by(condition) %>% summarize(Mean_Mileage=mean(odometer),Maximum_Price=max(price),Num_Vehicles=n(), .groups = 'keep') #create summary table with multiple columns
+total_summary <- suspension %>% summarize(Mean=mean(PSI),Median=median(PSI),Var=var(PSI),SD=sd(PSI))
+
+lot_summary <- suspension %>% group_by(Manufacturing_Lot) %>% summarize(Mean=mean(PSI),Median=median(PSI),Var=var(PSI),SD=sd(PSI), .groups='keep')
+
+
+# Deliverable 3
+
+# t.test(log10(sample_table$Miles_Driven),mu=mean(log10(population_table$Miles_Driven))) #compare sample versus population means
+# Three variables x , mu, alternative
+
+t.test(suspension$PSI, mu = 1500)
+t.test(subset(suspension, Manufacturing_Lot=="Lot1")$PSI, mu = 1500)
+t.test(subset(suspension, Manufacturing_Lot=="Lot2")$PSI, mu = 1500)
+t.test(subset(suspension, Manufacturing_Lot=="Lot3")$PSI, mu = 1500)
 
